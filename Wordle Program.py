@@ -16,25 +16,20 @@ def getWord():
 
 
 
-def compareLetters():
-    if secretWord[0] == guessLetters[0]:
-        wordGuess[0] = guessLetters[0]
-    if secretWord[1] == guessLetters[1]:
-        wordGuess[1] = guessLetters[1]
-    if secretWord[2] == guessLetters[2]:
-        wordGuess[2] = guessLetters[2]
-    if secretWord[3] == guessLetters[3]:
-        wordGuess[3] = guessLetters[3]
-    if secretWord[4] == guessLetters[4]:
-        wordGuess[4] = guessLetters[4]
+def compareLetters(secretWord, guessLetters, wordGuess):
+
+    for i in range(5):
+        if secretWord[i] == guessLetters[i]:
+            wordGuess[i] = guessLetters[i]
 
     if wordGuess == guessLetters:
-        match = True
-        return match
+        return True
+    else:
+        return False
 
 
 
-def printLines():
+def printLines(wordGuess, guessLetters, secretWord):
 
     greenLetters = []
     yellowLetters = []
@@ -92,39 +87,44 @@ def printLines():
     print("\n")
 
 
-word = getWord()
-secretWord = list(word)
-solved = False
-match = False
+def main():
+    word = getWord()
+    secretWord = list(word)
+    solved = False
+    match = False
 
 
 
-print("\nWelcome to wordle! Guess 5 letter words and use the letter hints to help you make your guesses to solve the puzzle!")
-print("The green and yellow letters update after each guess.")
+    print("\nWelcome to wordle! Guess 5 letter words and use the letter hints to help you make your guesses to solve the puzzle!")
+    print("The green and yellow letters update after each guess.")
 
-for i in range(6):
+    for i in range(6):
 
-    guess = input("\nGuess a 5 letter word: ").upper()
-    guessLetters = list(guess)
-    wordGuess = list("_____")
-
-    while (len(guessLetters) != 5):
-        print("Make sure your word is 5 letters")
-        guess = input("Guess a 5 letter word: ").upper()
+        guess = input("\nGuess a 5 letter word: ").upper()
         guessLetters = list(guess)
+        wordGuess = list("_____")
 
-    match = compareLetters()
+        while (len(guessLetters) != 5):
+            print("\nMake sure your word is 5 letters!\n")
+            guess = input("Guess a 5 letter word: ").upper()
+            guessLetters = list(guess)
 
-    printLines()
+        match = compareLetters(secretWord, guessLetters, wordGuess)
 
-    if match == True:
-        solved = True
-        break
+        printLines(wordGuess, guessLetters, secretWord)
+
+        if match == True:
+            solved = True
+            break
 
 
 
-# Win / lose
-if solved == True:
-    print("\nYou win!")
-else:
-    print("\nYou lose!")
+    # Win / lose
+    if solved == True:
+        print("\nYou win!")
+    else:
+        print("\nYou lose!")
+        print("The word was", word)
+
+
+main()
